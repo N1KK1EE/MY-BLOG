@@ -1,14 +1,3 @@
-// const express = require('express');
-// // const { blogController } = require('../Controllers/blogController');
-// const { protect } = require('../Middlewares/authMiddleware');
-// const router = express.Router();
-// const {createBlog} = require('../Middlewares/authController')
-
-// router.post('/create', protect, createBlog);
-
-// module.exports = router;
-
-
 const express = require('express');
 const router = express.Router();
 const blogController = require('../Controllers/blogControllers');
