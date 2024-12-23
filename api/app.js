@@ -1,5 +1,4 @@
 const express = require('express');
-const connectDB = require('./config/db');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./Routes/authRoutes');
@@ -8,12 +7,13 @@ const { errorMiddleware } = require('./Middlewares/errorMiddleware');
 const PORT = process.env.PORT || 3022;
 
 dotenv.config();
-connectDB();
+
 
 const app = express();
 
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -29,8 +29,6 @@ app.use('/api/blogs', blogRoutes);
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
-  });
 
-// module.exports = app;
+
+module.exports = app;
