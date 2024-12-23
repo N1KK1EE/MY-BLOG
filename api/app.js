@@ -1,14 +1,17 @@
 const express = require('express');
+const connectDB = require('./config/db');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./Routes/authRoutes');
 const blogRoutes = require('./Routes/blogRoutes');
 const { errorMiddleware } = require('./Middlewares/errorMiddleware');
-const PORT = 3004
+const PORT = process.env.PORT || 3022;
 
 dotenv.config();
+connectDB();
 
 const app = express();
+
 
 app.use(express.json());
 
