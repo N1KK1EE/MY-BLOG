@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGN UP</title>
-    <link href="./signin.ejs"></href>
 </head>
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Signup</h2>
-        <form action="/signup" method="POST" class="mt-4">
+        <form action="/api/auth/signUp" method="POST">
           <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
             <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
@@ -29,8 +28,9 @@
           <button type="submit" class="btn btn-primary w-100">Signup</button>
         </form>
         <div class="text-center mt-3">
-          <p>Already have an account? <a href="./signin.ejs">Signin</a></p>
+          <p>Already have an account? <a href="/api/auth/signIn">Signin</a></p>
         </div>
       </div>
+    </form>
 </body>
 </html>

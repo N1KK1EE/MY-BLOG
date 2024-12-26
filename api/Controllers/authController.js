@@ -4,10 +4,10 @@ const User = require('../Models/user');
 require('dotenv').config()
 
 // Sign Up
-exports.signup = async (req, res) => {
-  try {
-    const { first_name, last_name, email, password } = req.body;
+exports.signUp = async (req, res) => {
+  const { first_name, last_name, email, password } = req.body;
 
+  try {
     // Check if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'Email already in use' });
@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
 };
 
 // Sign In
-exports.signin = async (req, res) => {
+exports.signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(req.body)

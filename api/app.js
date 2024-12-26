@@ -16,13 +16,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 app.set("view engine", "ejs");
-app.set("views", "views");
+app.set("views", "./Views");
 
 app.get('/', (req, res) => {
  console.log(req.url)
-    res.render('index', { message: 'Welcome to the Blogging Platform!' });
+    res.render('signIn', { message: 'Welcome to the Blogging Platform!' });
   });
 
+  app.get('/', (req, res) => {
+    console.log(req.url)
+       res.render('signUp', { message: 'Welcome to the Blogging Platform!' });
+     });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/blogs', blogRoutes);
