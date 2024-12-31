@@ -9,7 +9,7 @@ const calculateReadingTime = (body) => {
 };
 
 // Create a new blog
-exports.createBlog = async (req, res) => {
+const createBlog = async (req, res) => {
   try {
     const { title, description, body, tags } = req.body;
     const newBlog = new Blog({
@@ -29,7 +29,7 @@ exports.createBlog = async (req, res) => {
 };
 
 // Update blog state to published
-exports.updateBlogState = async (req, res) => {
+const updateBlogState = async (req, res) => {
   try {
     const { id } = req.params;
     const mongoose = require('mongoose');
@@ -58,7 +58,7 @@ exports.updateBlogState = async (req, res) => {
 };
 
 //Get a list of published blogs (with pagination)
-exports.getBlogs = async (req, res) => {
+const getBlogs = async (req, res) => {
   try {
      const { page = 1, limit = 20, search = '', sort = 'timestamp' } = req.query;
 
@@ -75,7 +75,7 @@ exports.getBlogs = async (req, res) => {
  };
 
 // // Get a single blog by ID
-exports.getBlog = async (req, res) => {
+const getBlogById = async (req, res) => {
  try {
      const blog = await Blog.findById(req.params.id).populate('author', 'first_name last_name email');
 
@@ -92,3 +92,52 @@ exports.getBlog = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
    }
  };
+
+ const editBlog = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, tags, body } = req.body;
+
+  try {
+    const blog = await Blog.findById(id);
+    if (!blog || blog.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to edit this blog' });
+    }
+
+    blog.title = title;
+    blog.description = description;
+    blog.tags = tags;
+    blog.body = body;
+    blog.calculateReadingTime();
+    await blog.save();
+
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete blog (only for owner)
+const deleteBlog = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const blog = await Blog.findById(id);
+    if (!blog || blog.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to delete this blog' });
+    }
+
+    await blog.remove();
+    res.status(200).json({ message: 'Blog deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  createBlog,
+  getBlogs,
+  getBlogById,
+  editBlog,
+  updateBlogState,
+  deleteBlog
+};

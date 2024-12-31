@@ -5,7 +5,7 @@ const authMiddleware = require('../Middlewares/authMiddleware')
 
 // Public routes
 router.get('/', blogController.getBlogs);
-router.get('/:id', blogController.getBlog);
+router.get('/:id', blogController.getBlogById);
 
 // Protected routes (authentication required)
 router.post('/create', authMiddleware, blogController.createBlog);

@@ -4,7 +4,7 @@ const User = require('../Models/user');
 require('dotenv').config()
 
 // Sign Up
-exports.signUp = async (req, res) => {
+const signUp = async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
   try {
@@ -28,7 +28,7 @@ exports.signUp = async (req, res) => {
 };
 
 // Sign In
-exports.signIn = async (req, res) => {
+const signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(req.body)
@@ -59,4 +59,9 @@ exports.signIn = async (req, res) => {
     console.error('Sign-In Error:', error.message);
     res.status(500).json({ message: 'Server Error' });
   }
+};
+
+module.exports = { 
+  signIn,
+  signUp
 };
