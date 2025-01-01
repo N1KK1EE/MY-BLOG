@@ -1,10 +1,10 @@
 const request = require('supertest');
-const app = require('../server'); // Your Express app
+const app = require('../server');
 const Blog = require('../Models/blog');
-const User = require('../Models/user'); // Assuming user model exists
+const User = require('../Models/user'); 
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET_KEY } = process.env;
+const { SECRET_KEY } = process.env;
 
 let userToken;
 
@@ -24,7 +24,7 @@ beforeAll(async () => {
 
   // Generate JWT for the user
   const payload = { userId: user._id };
-  userToken = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: '1h' });
+  userToken = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
 });
 
 // Clean up the database after each test
